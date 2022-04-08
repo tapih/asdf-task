@@ -2,10 +2,10 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for xterrafile.
-GH_REPO="https://github.com/devopsmakers/xterrafile"
-TOOL_NAME="xterrafile"
-TOOL_TEST="xterrafile version"
+# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for task.
+GH_REPO="https://github.com/go-task/task"
+TOOL_NAME="task"
+TOOL_TEST="task version"
 
 fail() {
   echo -e "asdf-$TOOL_NAME: $*"
@@ -14,7 +14,7 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if xterrafile is not hosted on GitHub releases.
+# NOTE: You might want to remove this if task is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
   curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -32,24 +32,30 @@ list_github_tags() {
 
 list_all_versions() {
   # TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-  # Change this function if xterrafile has other means of determining installable versions.
+  # Change this function if task has other means of determining installable versions.
   list_github_tags
 }
 
 download_release() {
-  local version filename url platform
+  local version filename url platform arch
 
   version="$1"
   filename="$2"
+
+  case $(uname -m) in
+  x86_64) arch="amd64" ;;
+  arm64) arch="arm64" ;;
+  *) arch="$(uname -m)" ;;
+  esac
 
   platform="$(uname | tr '[:upper:]' '[:lower:]')"
   if [[ ! (${platform} == linux || ${platform} == darwin) ]]; then
     fail "Unsupported platform '${platform}' found. Only Linux and Darwin are supported."
   fi
 
-  # TODO: Adapt the release URL convention for xterrafile
-  # https://github.com/devopsmakers/xterrafile/releases/download/v2.3.1/xterrafile_2.3.1_Darwin_x86_64.tar.gz
-  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}_${version}_${platform}_x86_64.tar.gz"
+  # TODO: Adapt the release URL convention for task
+  # https://github.com/go-task/task/releases/download/v3.12.0/task_linux_amd64.deb
+  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}_${platform}_${arch}.tar.gz"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" "$url" || fail "Could not download $url"
@@ -69,7 +75,7 @@ install_version() {
     echo "install path"
     cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-    # TODO: Asert xterrafile executable exists.
+    # TODO: Asert task executable exists.
     local tool_cmd
     tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
     test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."

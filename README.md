@@ -1,9 +1,9 @@
 <div align="center">
 
-# asdf-xterrafile [![Build](https://github.com/signavio/asdf-xterrafile/actions/workflows/build.yml/badge.svg)](https://github.com/signavio/asdf-xterrafile/actions/workflows/build.yml) [![Lint](https://github.com/signavio/asdf-xterrafile/actions/workflows/lint.yml/badge.svg)](https://github.com/signavio/asdf-xterrafile/actions/workflows/lint.yml)
+# asdf-task [![Build](https://github.com/signavio/asdf-task/actions/workflows/build.yml/badge.svg)](https://github.com/signavio/asdf-task/actions/workflows/build.yml) [![Lint](https://github.com/signavio/asdf-task/actions/workflows/lint.yml/badge.svg)](https://github.com/signavio/asdf-task/actions/workflows/lint.yml)
 
 
-[xterrafile](https://github.com/signavio/xterrafile) plugin for the [asdf version manager](https://asdf-vm.com).
+[task](https://github.com/go-task/task) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
@@ -24,25 +24,25 @@
 Plugin:
 
 ```shell
-asdf plugin add xterrafile
+asdf plugin add task
 # or
-asdf plugin add xterrafile https://github.com/signavio/asdf-xterrafile.git
+asdf plugin add task https://github.com/signavio/asdf-task.git
 ```
 
-xterrafile:
+task:
 
 ```shell
 # Show all installable versions
-asdf list-all xterrafile
+asdf list-all task
 
 # Install specific version
-asdf install xterrafile latest
+asdf install task latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global xterrafile latest
+asdf global task latest
 
-# Now xterrafile commands are available
-xterrafile --version
+# Now task commands are available
+task --version
 ```
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
@@ -52,11 +52,11 @@ install & manage versions.
 
 Contributions of any kind welcome! See the [contributing guide](contributing.md).
 
-[Thanks goes to these contributors](https://github.com/signavio/asdf-xterrafile/graphs/contributors)!
+[Thanks goes to these contributors](https://github.com/signavio/asdf-task/graphs/contributors)!
 
 ## Testing
 ```bash
-asdf plugin-test xterrafile https://github.com/signavio/asdf-xterrafile --asdf-tool-version latest --asdf-plugin-gitref $(git rev-parse HEAD) xterrafile --version
+asdf plugin-test task https://github.com/signavio/asdf-task --asdf-tool-version latest --asdf-plugin-gitref $(git rev-parse HEAD) task --version
 ```
 
 
